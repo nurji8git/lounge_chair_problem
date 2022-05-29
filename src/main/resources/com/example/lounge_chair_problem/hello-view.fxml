@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox alignment="BOTTOM_CENTER" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lounge_chair_problem.HelloController">
+   <children>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="Program">
+               <items>
+                  <MenuItem fx:id="menu_restart" mnemonicParsing="false" onAction="#Restart_program" text="Restart" />
+                  <MenuItem fx:id="menu_exit" mnemonicParsing="false" onAction="#Exit_program" text="Exit" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Group>
+         <children>
+            <PieChart fx:id="state_of_chairs_PChart" cache="true" clockwise="false" focusTraversable="true" labelLineLength="0.0" legendSide="TOP" legendVisible="false" pickOnBounds="false" prefHeight="385.0" prefWidth="500.0" startAngle="-90.0" title="Current state of the chairs" />
+            <Circle fill="WHITE" layoutX="250.0" layoutY="205.0" radius="140.0" stroke="#b2b2b2" strokeType="INSIDE" />
+         </children>
+      </Group>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Number of all chairs" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <TextField fx:id="num_all_chairs_input" prefHeight="25.0" prefWidth="100.0" />
+                              <Button fx:id="num_all_chairs_Submit" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#Set_N_all_chairs" text="Set" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Number of people in new group" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <TextField fx:id="new_group_input" prefHeight="25.0" prefWidth="100.0" />
+                              <Button fx:id="new_group_submit" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#Serve_New_Group" text="Set" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Index of outgoing group" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <TextField fx:id="index_out_group" prefHeight="25.0" prefWidth="100.0" />
+                              <Button fx:id="out_group_submit" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#Group_Outgoing" text="Set" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <Label fx:id="messages_lb" text="Messages">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>
