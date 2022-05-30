@@ -42,25 +42,13 @@ public class JavaFXController {
     private ObservableList<PieChart.Data> pchart_data;
 
     @FXML
-    private int current_group_id;
-
-    @FXML
-    private Solution solution;
-
-    @FXML
     private void Set_N_all_chairs()
     {
-        solution = new Solution();
         int num_of_all_chairs = new IntegerStringConverter().fromString(num_all_chairs_input.getText());
         all_chairs = FXCollections.observableArrayList();
         pchart_data = FXCollections.observableArrayList();
         all_chairs.add(new Chairs_Group(0, "Free", num_of_all_chairs));
-        for(Chairs_Group chair_group: all_chairs)
-        {
-            pchart_data.add(new PieChart.Data(chair_group.getIs_free() + "\n" +chair_group.getGroup_size(), chair_group.getGroup_size()));
-        }
-        state_of_chairs_PChart.setData(pchart_data);
-        applyCustomColorSequence(pchart_data);
+        UpdateData();
 
         num_all_chairs_input.setDisable(true);
         num_all_chairs_Submit.setDisable(true);
@@ -79,7 +67,6 @@ public class JavaFXController {
         all_chairs = FXCollections.observableArrayList();
         pchart_data = FXCollections.observableArrayList();
         state_of_chairs_PChart.setData(pchart_data);
-        current_group_id = 0;
         num_all_chairs_input.setDisable(false);
         num_all_chairs_input.clear();
         num_all_chairs_Submit.setDisable(false);
@@ -101,12 +88,11 @@ public class JavaFXController {
     @FXML
     private void Serve_New_Group()
     {
-        current_group_id += 1;
         int new_group_size = new IntegerStringConverter().fromString(new_group_input.getText());
         if(new_group_size > 0)
         {
             pchart_data.clear();
-            solution.Place_New_Group(all_chairs, new Chairs_Group(current_group_id, "Group: " + current_group_id + "\nSize: " + new_group_size, new_group_size));
+
             for(Chairs_Group chairs_group: all_chairs)
             {
                 pchart_data.add(new PieChart.Data(chairs_group.getIs_free(), chairs_group.getGroup_size()));
@@ -115,7 +101,11 @@ public class JavaFXController {
             state_of_chairs_PChart.setData(pchart_data);
             applyCustomColorSequence(pchart_data);
 
-            messages_lb.setText("Last action: Group with index " + current_group_id + " came");
+            messages_lb.setText("Last action: New group of " + new_group_size + " customers came");
+        }
+        else
+        {
+            messages_lb.setText("Last action: No free chairs for this group");
         }
     }
 
@@ -129,7 +119,6 @@ public class JavaFXController {
         }
         else
         {
-            solution.Remove_Group(all_chairs, outgoing_group_index);
             pchart_data.clear();
             for(Chairs_Group chairs_group: all_chairs)
             {
@@ -139,6 +128,18 @@ public class JavaFXController {
             applyCustomColorSequence(pchart_data);
             messages_lb.setText("Last action: Group with index " + outgoing_group_index + " was gone");
         }
+    }
+
+    @FXML
+    private void UpdateData()
+    {
+        pchart_data.clear();
+        for(Chairs_Group chair_group: all_chairs)
+        {
+            pchart_data.add(new PieChart.Data(chair_group.getIs_free() + "\n" +chair_group.getGroup_size(), chair_group.getGroup_size()));
+        }
+        state_of_chairs_PChart.setData(pchart_data);
+        applyCustomColorSequence(pchart_data);
     }
 
     @FXML
