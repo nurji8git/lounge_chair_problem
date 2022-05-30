@@ -5,15 +5,14 @@ import java.util.Arrays;
 public class CircularQueue<E> {
 
     private int currentSize; //Current Circular Queue Size
-    private E[] circularQueueElements;
-    private int maxSize; //Circular Queue maximum size
+    private final E[] circularQueueElements;
 
     private int rear;//rear position of Circular queue(new element enqueued at rear).
     private int front; //front position of Circular queue(element will be dequeued from front).
 
     public CircularQueue(int maxSize) {
-        this.maxSize = maxSize;
-        circularQueueElements = (E[]) new Object[this.maxSize];
+        //Circular Queue maximum size
+        circularQueueElements = (E[]) new Object[maxSize];
         currentSize = 0;
         front = -1;
         rear = -1;
