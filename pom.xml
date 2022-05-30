@@ -86,7 +86,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.lounge_chair_problem/com.example.lounge_chair_problem.HelloApplication
+                                com.example.lounge_chair_problem/com.example.lounge_chair_problem.MainApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

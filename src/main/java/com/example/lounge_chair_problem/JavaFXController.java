@@ -9,7 +9,7 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.util.Objects;
 
-public class HelloController {
+public class JavaFXController {
 
     @FXML
     private TextField num_all_chairs_input;
@@ -57,7 +57,7 @@ public class HelloController {
         all_chairs.add(new Chairs_Group(0, "Free", num_of_all_chairs));
         for(Chairs_Group chair_group: all_chairs)
         {
-            pchart_data.add(new PieChart.Data(chair_group.getIs_free(), chair_group.getGroup_size()));
+            pchart_data.add(new PieChart.Data(chair_group.getIs_free() + "\n" +chair_group.getGroup_size(), chair_group.getGroup_size()));
         }
         state_of_chairs_PChart.setData(pchart_data);
         applyCustomColorSequence(pchart_data);
@@ -116,12 +116,6 @@ public class HelloController {
             applyCustomColorSequence(pchart_data);
 
             messages_lb.setText("Last action: Group with index " + current_group_id + " came");
-            System.out.println("#######");
-            for(Chairs_Group chairs_group: all_chairs)
-            {
-                System.out.println(chairs_group.getGroup_size());
-            }
-            System.out.println("#######");
         }
     }
 
@@ -145,13 +139,6 @@ public class HelloController {
             applyCustomColorSequence(pchart_data);
             messages_lb.setText("Last action: Group with index " + outgoing_group_index + " was gone");
         }
-
-        System.out.println("#######");
-        for(Chairs_Group chairs_group: all_chairs)
-        {
-            System.out.println(chairs_group.getGroup_size());
-        }
-        System.out.println("#######");
     }
 
     @FXML
@@ -159,7 +146,7 @@ public class HelloController {
     {
         for (PieChart.Data data : pieChartData)
         {
-            if(Objects.equals(data.getName(), "Free"))
+            if(Objects.equals(data.getName().substring(0, 4), "Free"))
             {
                 data.getNode().setStyle("-fx-pie-color: #BF6;");
             }

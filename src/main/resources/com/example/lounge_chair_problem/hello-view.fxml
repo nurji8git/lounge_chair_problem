@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox alignment="BOTTOM_CENTER" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lounge_chair_problem.HelloController">
+<VBox alignment="BOTTOM_CENTER" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lounge_chair_problem.JavaFXController">
    <children>
       <MenuBar>
          <menus>
@@ -28,8 +28,8 @@
       </MenuBar>
       <Group>
          <children>
-            <PieChart fx:id="state_of_chairs_PChart" cache="true" clockwise="false" focusTraversable="true" labelLineLength="0.0" legendSide="TOP" legendVisible="false" pickOnBounds="false" prefHeight="385.0" prefWidth="500.0" startAngle="-90.0" title="Current state of the chairs" />
-            <Circle fill="WHITE" layoutX="250.0" layoutY="205.0" radius="140.0" stroke="#b2b2b2" strokeType="INSIDE" />
+            <PieChart fx:id="state_of_chairs_PChart" animated="false" cache="true" clockwise="false" focusTraversable="true" labelLineLength="0.0" legendSide="TOP" legendVisible="false" pickOnBounds="false" prefHeight="385.0" prefWidth="500.0" startAngle="-90.0" title="Current state of the chairs" />
+            <Circle fill="WHITE" layoutX="250.0" layoutY="205.0" radius="130.0" stroke="#b2b2b2" strokeType="INSIDE" />
          </children>
       </Group>
       <Separator prefWidth="200.0" />
