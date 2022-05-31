@@ -5,21 +5,48 @@ import java.util.List;
 
 public class CircularDataStructure
 {
-    private final int size;
-
     private final List<Chairs_Group> chairs_circular_list;
 
     public CircularDataStructure(int size)
     {
         this.chairs_circular_list = new ArrayList<>();
-        this.size = size;
         this.chairs_circular_list.add(new Chairs_Group(0, true, size));
     }
 
-    public void addNewGroup(Chairs_Group new_group_of_customers, Chairs_Group free_chairs_group, int prev_next)
+    public List<Chairs_Group> getChairs_circular_list()
+    {
+        return chairs_circular_list;
+    }
+
+    public void addNewGroup(Customers_Group new_group_of_customers, Chairs_Group free_chairs_group, int prev_next)
     {
         free_chairs_group.setGroup_size(free_chairs_group.getGroup_size() - new_group_of_customers.getGroup_size());
-        this.chairs_circular_list.add(this.chairs_circular_list.indexOf(free_chairs_group) + prev_next, new_group_of_customers);
+        this.chairs_circular_list.add(this.chairs_circular_list.indexOf(free_chairs_group) + prev_next, new Chairs_Group(new_group_of_customers.getGroup_id(), false, new_group_of_customers.getGroup_size()));
+    }
+    public Chairs_Group findChairsForGroup(Customers_Group new_group)
+    {
+        for(Chairs_Group chairs_group: chairs_circular_list)
+        {
+            if(chairs_group.getGroup_size() == new_group.getGroup_size() && chairs_group.isIs_free())
+            {
+                return chairs_group;
+            }
+        }
+        int res_index = 0;
+        int cond_size = countFreeChairs();
+
+        for(Chairs_Group chairs_group: chairs_circular_list)
+        {
+            if(chairs_group.getGroup_size() > new_group.getGroup_size() && chairs_group.isIs_free())
+            {
+                if(chairs_group.getGroup_size() <= cond_size)
+                {
+                    res_index = chairs_circular_list.indexOf(chairs_group);
+                    cond_size = chairs_group.getGroup_size();
+                }
+            }
+        }
+        return chairs_circular_list.get(res_index);
     }
     public void removeGroup(int index)
     {
@@ -29,6 +56,7 @@ public class CircularDataStructure
             {
                 chairs_group.setGroup_id(0);
                 chairs_group.setIs_free(true);
+                System.out.println("TEST:" + chairs_circular_list.indexOf(chairs_group));
                 mergeFreeGroupsOfChairs(chairs_group);
                 return;
             }
@@ -60,7 +88,7 @@ public class CircularDataStructure
         {
             return this.chairs_circular_list.get(1);
         }
-        else if(this.chairs_circular_list.indexOf(chairs_group) == this.size - 1)
+        else if(this.chairs_circular_list.indexOf(chairs_group) == chairs_circular_list.size() - 1)
         {
             return this.chairs_circular_list.get(0);
         }
@@ -73,11 +101,11 @@ public class CircularDataStructure
     {
         if(this.chairs_circular_list.indexOf(chairs_group) == 0)
         {
-            return this.chairs_circular_list.get(this.size - 1);
+            return this.chairs_circular_list.get(chairs_circular_list.size() - 1);
         }
-        else if(this.chairs_circular_list.indexOf(chairs_group) == this.size - 1)
+        else if(this.chairs_circular_list.indexOf(chairs_group) == chairs_circular_list.size() - 1)
         {
-            return this.chairs_circular_list.get(this.size - 2);
+            return this.chairs_circular_list.get(chairs_circular_list.size() - 2);
         }
         else
         {

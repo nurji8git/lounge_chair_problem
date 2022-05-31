@@ -38,24 +38,22 @@ public class JavaFXController {
     private PieChart state_of_chairs_PChart;
 
     @FXML
-    private ObservableList<Chairs_Group> all_chairs;
-
-    @FXML
     private ObservableList<PieChart.Data> pchart_data;
 
     @FXML
-    private Solution solution;
+    private CircularDataStructure chairs_circular_list;
+
+    @FXML
+    private int new_group_id = 0;
 
     @FXML
     private void InitializeNewSituation()
     {
-        solution = new Solution();
         if(!Objects.equals(num_all_chairs_input.getText(), ""))
         {
             int num_of_all_chairs = new IntegerStringConverter().fromString(num_all_chairs_input.getText());
-            all_chairs = FXCollections.observableArrayList();
+            chairs_circular_list = new CircularDataStructure(num_of_all_chairs);
             pchart_data = FXCollections.observableArrayList();
-            all_chairs.add(new Chairs_Group(0, true, num_of_all_chairs));
             UpdateData();
 
             num_all_chairs_input.setDisable(true);
@@ -72,39 +70,6 @@ public class JavaFXController {
         {
             messages_lb.setText("Field is empty!");
         }
-
-        List<Chairs_Group> tmp = new ArrayList<>();
-        tmp.add(new Chairs_Group(1, false, 12));
-        tmp.add(new Chairs_Group(2, false, 5));
-        tmp.add(new Chairs_Group(3, false, 5));
-        tmp.add(new Chairs_Group(0, true, 5));
-        tmp.add(new Chairs_Group(4, false, 5));
-        tmp.add(new Chairs_Group(0, true, 5));
-        solution.clustering_of_chairs(tmp);
-    }
-
-    @FXML
-    private void Restart_program()
-    {
-        all_chairs.clear();
-        pchart_data.clear();
-        state_of_chairs_PChart.setData(pchart_data);
-        num_all_chairs_input.setDisable(false);
-        num_all_chairs_input.clear();
-        num_all_chairs_Submit.setDisable(false);
-        new_group_input.setDisable(true);
-        new_group_input.clear();
-        new_group_submit.setDisable(true);
-        index_out_group.setDisable(true);
-        index_out_group.clear();
-        out_group_submit.setDisable(true);
-        messages_lb.setText("Last action: Restart");
-    }
-
-    @FXML
-    private void Exit_program()
-    {
-        System.exit(0);
     }
 
     @FXML
@@ -115,7 +80,9 @@ public class JavaFXController {
             int new_group_size = new IntegerStringConverter().fromString(new_group_input.getText());
             if(new_group_size > 0)
             {
-                //There should be method for allocating new group of customers
+                new_group_id++;
+                Customers_Group customers_group = new Customers_Group(new_group_id, new_group_size);
+                chairs_circular_list.addNewGroup(customers_group, chairs_circular_list.findChairsForGroup(customers_group), 0);
                 UpdateData();
 
                 messages_lb.setText("Last action: New group of " + new_group_size + " customers came");
@@ -136,11 +103,6 @@ public class JavaFXController {
     {
         if(!Objects.equals(new_group_input.getText(), ""))
         {
-            if(all_chairs.size() <= 1)
-            {
-                messages_lb.setText("No group to remove");
-                return;
-            }
             int outgoing_group_index = new IntegerStringConverter().fromString(index_out_group.getText());
             if(outgoing_group_index == 0)
             {
@@ -148,7 +110,7 @@ public class JavaFXController {
             }
             else
             {
-                //There should be method for removing a group of customer
+                chairs_circular_list.removeGroup(outgoing_group_index);
                 UpdateData();
                 messages_lb.setText("Last action: Group with index " + outgoing_group_index + " was gone");
             }
@@ -163,9 +125,16 @@ public class JavaFXController {
     private void UpdateData()
     {
         pchart_data.clear();
-        for(Chairs_Group chair_group: all_chairs)
+        for(Chairs_Group chair_group: chairs_circular_list.getChairs_circular_list())
         {
-            pchart_data.add(new PieChart.Data("", chair_group.getGroup_size()));
+            if(chair_group.isIs_free())
+            {
+                pchart_data.add(new PieChart.Data("Free" + "\n" + chair_group.getGroup_size(), chair_group.getGroup_size()));
+            }
+            else
+            {
+                pchart_data.add(new PieChart.Data("Group " + chair_group.getGroup_id() + "\nSize " + chair_group.getGroup_size(), chair_group.getGroup_size()));
+            }
         }
         state_of_chairs_PChart.setData(pchart_data);
         applyCustomColorSequence(pchart_data);
@@ -176,7 +145,7 @@ public class JavaFXController {
     {
         for (PieChart.Data data : pieChartData)
         {
-            if(Objects.equals(data.getName(), ""))
+            if(Objects.equals(data.getName().substring(0, 4), "Free"))
             {
                 data.getNode().setStyle("-fx-pie-color: #BF6;");
             }
@@ -185,5 +154,30 @@ public class JavaFXController {
                 data.getNode().setStyle("-fx-pie-color: #F80;");
             }
         }
+    }
+
+    @FXML
+    private void Restart_program()
+    {
+        chairs_circular_list = new CircularDataStructure(0);
+        pchart_data.clear();
+        state_of_chairs_PChart.setData(pchart_data);
+        new_group_id = 0;
+        num_all_chairs_input.setDisable(false);
+        num_all_chairs_input.clear();
+        num_all_chairs_Submit.setDisable(false);
+        new_group_input.setDisable(true);
+        new_group_input.clear();
+        new_group_submit.setDisable(true);
+        index_out_group.setDisable(true);
+        index_out_group.clear();
+        out_group_submit.setDisable(true);
+        messages_lb.setText("Last action: Restart");
+    }
+
+    @FXML
+    private void Exit_program()
+    {
+        System.exit(0);
     }
 }
