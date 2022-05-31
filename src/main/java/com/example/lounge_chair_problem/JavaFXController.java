@@ -82,7 +82,7 @@ public class JavaFXController {
             {
                 new_group_id++;
                 Customers_Group customers_group = new Customers_Group(new_group_id, new_group_size);
-                chairs_circular_list.addNewGroup(customers_group, chairs_circular_list.findChairsForGroup(customers_group), 0);
+                chairs_circular_list.addNewGroup(customers_group);
                 UpdateData();
 
                 messages_lb.setText("Last action: New group of " + new_group_size + " customers came");
