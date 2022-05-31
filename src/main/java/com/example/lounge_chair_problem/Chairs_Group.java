@@ -3,13 +3,13 @@ package com.example.lounge_chair_problem;
 import javafx.beans.property.*;
 
 public class Chairs_Group {
-    private SimpleIntegerProperty group_id;
-    private SimpleStringProperty is_free;
-    private SimpleIntegerProperty group_size;
+    private final SimpleIntegerProperty group_id;
+    private final SimpleBooleanProperty is_free;
+    private final SimpleIntegerProperty group_size;
 
-    public Chairs_Group(int group_id, String is_free, int group_size){
+    public Chairs_Group(int group_id, boolean is_free, int group_size){
         this.group_id = new SimpleIntegerProperty(group_id);
-        this.is_free = new SimpleStringProperty(is_free);
+        this.is_free = new SimpleBooleanProperty(is_free);
         this.group_size = new SimpleIntegerProperty(group_size);
     }
 
@@ -25,15 +25,15 @@ public class Chairs_Group {
         this.group_id.set(group_id);
     }
 
-    public String getIs_free() {
+    public boolean isIs_free() {
         return is_free.get();
     }
 
-    public SimpleStringProperty is_freeProperty() {
+    public SimpleBooleanProperty is_freeProperty() {
         return is_free;
     }
 
-    public void setIs_free(String is_free) {
+    public void setIs_free(boolean is_free) {
         this.is_free.set(is_free);
     }
 

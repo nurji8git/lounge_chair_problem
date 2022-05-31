@@ -7,6 +7,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.util.converter.IntegerStringConverter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class JavaFXController {
@@ -42,14 +44,18 @@ public class JavaFXController {
     private ObservableList<PieChart.Data> pchart_data;
 
     @FXML
-    private void Set_N_all_chairs()
+    private Solution solution;
+
+    @FXML
+    private void InitializeNewSituation()
     {
+        solution = new Solution();
         if(!Objects.equals(num_all_chairs_input.getText(), ""))
         {
             int num_of_all_chairs = new IntegerStringConverter().fromString(num_all_chairs_input.getText());
             all_chairs = FXCollections.observableArrayList();
             pchart_data = FXCollections.observableArrayList();
-            all_chairs.add(new Chairs_Group(0, "Free" + "\n" + num_of_all_chairs, num_of_all_chairs));
+            all_chairs.add(new Chairs_Group(0, true, num_of_all_chairs));
             UpdateData();
 
             num_all_chairs_input.setDisable(true);
@@ -66,6 +72,15 @@ public class JavaFXController {
         {
             messages_lb.setText("Field is empty!");
         }
+
+        List<Chairs_Group> tmp = new ArrayList<>();
+        tmp.add(new Chairs_Group(1, false, 12));
+        tmp.add(new Chairs_Group(2, false, 5));
+        tmp.add(new Chairs_Group(3, false, 5));
+        tmp.add(new Chairs_Group(0, true, 5));
+        tmp.add(new Chairs_Group(4, false, 5));
+        tmp.add(new Chairs_Group(0, true, 5));
+        solution.clustering_of_chairs(tmp);
     }
 
     @FXML
@@ -121,6 +136,11 @@ public class JavaFXController {
     {
         if(!Objects.equals(new_group_input.getText(), ""))
         {
+            if(all_chairs.size() <= 1)
+            {
+                messages_lb.setText("No group to remove");
+                return;
+            }
             int outgoing_group_index = new IntegerStringConverter().fromString(index_out_group.getText());
             if(outgoing_group_index == 0)
             {
@@ -145,7 +165,7 @@ public class JavaFXController {
         pchart_data.clear();
         for(Chairs_Group chair_group: all_chairs)
         {
-            pchart_data.add(new PieChart.Data(chair_group.getIs_free(), chair_group.getGroup_size()));
+            pchart_data.add(new PieChart.Data("", chair_group.getGroup_size()));
         }
         state_of_chairs_PChart.setData(pchart_data);
         applyCustomColorSequence(pchart_data);
@@ -156,7 +176,7 @@ public class JavaFXController {
     {
         for (PieChart.Data data : pieChartData)
         {
-            if(Objects.equals(data.getName().substring(0, 4), "Free"))
+            if(Objects.equals(data.getName(), ""))
             {
                 data.getNode().setStyle("-fx-pie-color: #BF6;");
             }
