@@ -27,21 +27,22 @@
    </Group>
    <Separator prefWidth="200.0" />
    <HBox alignment="CENTER">
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="200.0" spacing="10.0">
+      <VBox alignment="TOP_CENTER">
+         <Label text="Number of all chairs" textAlignment="CENTER">
+            <VBox.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </VBox.margin>
+         </Label>
+         <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+            <TextField fx:id="num_all_chairs_input" prefHeight="25.0" prefWidth="100.0" />
+            <Button fx:id="num_all_chairs_Submit" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#InitializeNewSituation" text="Set" />
+         </HBox>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="200.0" spacing="10.0">
          <padding>
             <Insets bottom="20.0" />
          </padding>
-         <VBox alignment="TOP_CENTER">
-            <Label text="Number of all chairs" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
-               <TextField fx:id="num_all_chairs_input" prefHeight="25.0" prefWidth="100.0" />
-               <Button fx:id="num_all_chairs_Submit" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#InitializeNewSituation" text="Set" />
-            </HBox>
-         </VBox>
          <VBox alignment="TOP_CENTER">
             <Label text="Number of people in new group" textAlignment="CENTER">
                <VBox.margin>
