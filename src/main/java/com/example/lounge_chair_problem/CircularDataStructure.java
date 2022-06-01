@@ -147,11 +147,7 @@ public class CircularDataStructure
         {
             return this.chairs_circular_list.get(0);
         }
-        if(this.chairs_circular_list.indexOf(chairs_group) == 0)
-        {
-            return this.chairs_circular_list.get(1);
-        }
-        else if(this.chairs_circular_list.indexOf(chairs_group) == chairs_circular_list.size() - 1)
+        if(this.chairs_circular_list.indexOf(chairs_group) == chairs_circular_list.size() - 1)
         {
             return this.chairs_circular_list.get(0);
         }
