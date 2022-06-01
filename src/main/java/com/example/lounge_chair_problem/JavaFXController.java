@@ -6,9 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.util.converter.IntegerStringConverter;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class JavaFXController {
@@ -78,14 +75,19 @@ public class JavaFXController {
         if(!Objects.equals(new_group_input.getText(), ""))
         {
             int new_group_size = new IntegerStringConverter().fromString(new_group_input.getText());
-            if(new_group_size > 0)
+            if(new_group_size > 0 && new_group_size <= chairs_circular_list.countFreeChairs())
             {
                 new_group_id++;
                 Customers_Group customers_group = new Customers_Group(new_group_id, new_group_size);
-                chairs_circular_list.addNewGroup(customers_group);
-                UpdateData();
-
-                messages_lb.setText("Last action: New group of " + new_group_size + " customers came");
+                if(chairs_circular_list.addNewGroup(customers_group))
+                {
+                    UpdateData();
+                    messages_lb.setText("Last action: New group of " + new_group_size + " customers came");
+                }
+                else
+                {
+                    messages_lb.setText("Last action: No free chairs for this group");
+                }
             }
             else
             {

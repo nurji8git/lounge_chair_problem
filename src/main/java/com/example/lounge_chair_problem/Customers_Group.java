@@ -3,9 +3,15 @@ package com.example.lounge_chair_problem;
 import javafx.beans.property.*;
 
 public class Customers_Group {
+
+    // ID of customers
     private final SimpleIntegerProperty group_id;
+
+    // Number of people in this group of customers
     private final SimpleIntegerProperty group_size;
 
+
+    // This is an entity class that presents a group of customers.
     public Customers_Group(int group_id, int group_size){
         this.group_id = new SimpleIntegerProperty(group_id);
         this.group_size = new SimpleIntegerProperty(group_size);
